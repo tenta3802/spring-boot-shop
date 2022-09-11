@@ -3,12 +3,14 @@ package com.shop.repository;
 import com.shop.entity.Item;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
 //<entity 타입의 class, primary key type>
-public interface ItemRepository extends JpaRepository<Item, Long> {
+public interface ItemRepository extends JpaRepository<Item, Long>,
+        QuerydslPredicateExecutor {
     List<Item> findByItemNmOrItemDetail(String itemNm, String itemDetail);
     List<Item> findByItemNm(String itemNm);
     List<Item> findByPriceLessThan(Integer price);
@@ -19,4 +21,5 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     //nativeQuery 사용
     @Query(value = "select * from item i where i.item_detail like %:itemDetail% order by i.price desc", nativeQuery = true)
     List<Item> findByItemDetailByNative(@Param("itemDetail") String itemDetail);
+
 }
