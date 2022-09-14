@@ -19,11 +19,11 @@
 </head>
 <body>
 
-<header th:replace="fragments/header::header"></header>
+<div th:replace="fragments/header::header"></div>
 
-<div layout:fragment="content"></div>
+<div layout:fragment="content" class="content"></div>
 
-<footer th:replace="fragments/footer::footer"></footer>
+<div th:replace="fragments/footer::footer"></div>
 
 </body>
 </html>
