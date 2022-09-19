@@ -22,6 +22,8 @@ public class OrderItem {
     @JoinColumn(name = "order_id")
     private Order order;
 
+    private int orderPrice;
+
     private int count;
 
     private LocalDateTime regTime;
