@@ -9,7 +9,8 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 //<entity 타입의 class, primary key type>
-public interface ItemRepository extends JpaRepository<Item, Long>, QuerydslPredicateExecutor {
+public interface ItemRepository extends JpaRepository<Item, Long>,
+        QuerydslPredicateExecutor<Item>, ItemRepositoryCustom{
     List<Item> findByItemNmOrItemDetail(String itemNm, String itemDetail);
     List<Item> findByItemNm(String itemNm);
     List<Item> findByPriceLessThan(Integer price);

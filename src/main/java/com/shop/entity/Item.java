@@ -34,7 +34,6 @@ public class Item extends BaseEntity{
     private  String itemDetail;
 
     @Enumerated(EnumType.STRING)
-    @Column
     private ItemSellStatus itemSellStatus;
     // constant.enum 클래스에 저장된 SOLD, SOLD_OUT 을 사용
 
