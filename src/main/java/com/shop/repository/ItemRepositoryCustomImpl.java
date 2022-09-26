@@ -29,19 +29,21 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
     }
 
     private BooleanExpression regDtsAfter(String searchDateType){
+
         LocalDateTime dateTime = LocalDateTime.now();
 
-        if(StringUtils.equals("all", searchDateType) || searchDateType ==null){
+        if(StringUtils.equals("all", searchDateType) || searchDateType == null){
             return null;
-        }else if(StringUtils.equals("1d", searchDateType)){
+        } else if(StringUtils.equals("1d", searchDateType)){
             dateTime = dateTime.minusDays(1);
-        }else if(StringUtils.equals("1w", searchDateType)){
+        } else if(StringUtils.equals("1w", searchDateType)){
             dateTime = dateTime.minusWeeks(1);
-        }else if(StringUtils.equals("1m", searchDateType)){
+        } else if(StringUtils.equals("1m", searchDateType)){
             dateTime = dateTime.minusMonths(1);
-        }else if(StringUtils.equals("6m", searchDateType)){
+        } else if(StringUtils.equals("6m", searchDateType)){
             dateTime = dateTime.minusMonths(6);
         }
+
         return QItem.item.regTime.after(dateTime);
     }
 
@@ -49,13 +51,16 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
 
         if(StringUtils.equals("itemNm", searchBy)){
             return QItem.item.itemNm.like("%" + searchQuery + "%");
-        }else if(StringUtils.equals("creatBy", searchBy)) {
-            return QItem.item.createBy.like("%" + searchQuery + "%");
+        } else if(StringUtils.equals("createdBy", searchBy)){
+            return QItem.item.createdBy.like("%" + searchQuery + "%");
         }
+
         return null;
     }
+
     @Override
     public Page<Item> getAdminItemPage(ItemSearchDto itemSearchDto, Pageable pageable) {
+
         List<Item> content = queryFactory
                 .selectFrom(QItem.item)
                 .where(regDtsAfter(itemSearchDto.getSearchDateType()),
@@ -73,6 +78,11 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom{
                         searchByLike(itemSearchDto.getSearchBy(), itemSearchDto.getSearchQuery()))
                 .fetchOne()
                 ;
+
         return new PageImpl<>(content, pageable, total);
+    }
+
+    private BooleanExpression itemNmLike(String searchQuery){
+        return StringUtils.isEmpty(searchQuery) ? null : QItem.item.itemNm.like("%" + searchQuery + "%");
     }
 }

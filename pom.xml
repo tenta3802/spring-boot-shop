@@ -119,7 +119,7 @@
 						</goals>
 						<configuration>
 							<outputDirectory>target/generated-source/java
-							</outputDirectory>
+                            </outputDirectory>
 							<processor>com.querydsl.apt.jpa.JPAAnnotationProcessor
 							</processor>
 						</configuration>

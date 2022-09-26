@@ -11,15 +11,15 @@ import java.util.List;
 //<entity 타입의 class, primary key type>
 public interface ItemRepository extends JpaRepository<Item, Long>,
         QuerydslPredicateExecutor<Item>, ItemRepositoryCustom{
-    List<Item> findByItemNmOrItemDetail(String itemNm, String itemDetail);
     List<Item> findByItemNm(String itemNm);
+    List<Item> findByItemNmOrItemDetail(String itemNm, String itemDetail);
     List<Item> findByPriceLessThan(Integer price);
     List<Item> findByPriceLessThanOrderByPriceDesc(Integer price);
     //jpql 쿼리를 이용
-    @Query("select i from Item i where i.itemDetail like %:itemDetail% order by i.price desc")
+    @Query("select i from Item i where i.itemDetail like " + "%:itemDetail% order by i.price desc")
     List<Item> findByItemDetail(@Param("itemDetail") String itemDetail);
     //nativeQuery 사용
-    @Query(value = "select * from item i where i.item_detail like %:itemDetail% order by i.price desc", nativeQuery = true)
+    @Query(value = "select * from item i where i.item_detail like " + "%:itemDetail% order by i.price desc", nativeQuery = true)
     List<Item> findByItemDetailByNative(@Param("itemDetail") String itemDetail);
 
 }
